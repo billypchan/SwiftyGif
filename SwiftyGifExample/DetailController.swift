@@ -25,15 +25,10 @@ class DetailController: UIViewController {
         super.viewDidLoad()
         
         if let imgName = self.gifName {
-            do {
-                let gifImage = try UIImage(gifName: imgName, levelOfIntegrity: .highestNoFrameSkipping)
-                self.imageView.setGifImage(gifImage, manager: gifManager)
-            } catch let error {
-                print("Error : \(error.localizedDescription)")
-
-                if let nonGifImage = UIImage(named: "\(imgName).gif") {
-                    self.imageView.image = nonGifImage
-                }
+            if let image = try? UIImage(imageName: imgName) {
+                self.imageView.setImage(image, manager: gifManager)
+            } else {
+                self.imageView.clear()
             }
         }
 

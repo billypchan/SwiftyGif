@@ -2,8 +2,8 @@
 //  SwiftyGifTests.swift
 //  SwiftyGifTests
 //
-//  Created by Alexis Creuzot on 28/03/16.
-//  Copyright © 2016 alexiscreuzot. All rights reserved.
+//  Created by Bill, Chan Yiu Por on 03/06/19.
+//  Copyright © 2019 BillChan. All rights reserved.
 //
 
 import XCTest
@@ -89,11 +89,6 @@ final class SwiftyGifTests: XCTestCase {
         assertSnapshot(matching: image, as: .image, file: file, testName: testName, line: line)
     }
 
-//    public func assertSnapshot<Value, Format>(matching value: @autoclosure () throws -> Value, as snapshotting: SnapshotTesting.Snapshotting<Value, Format>, named name: String? = nil, record recording: Bool = false, timeout: TimeInterval = 5, file: StaticString = #file, testName: String = #function, line: UInt = #line) {
-//
-//    }
-
-
     func testThatNonAnimatedGIFCanBeLoadedWithUIImage() {
         // GIVEN
         let gifName = "single_frame_Zt2012.gif"
@@ -150,10 +145,11 @@ final class SwiftyGifTests: XCTestCase {
         let imageView = UIImageView()
 
         let normalImage = UIImage(data: data)!
-        imageView.image = normalImage
+        imageView.setImage(normalImage, manager: gifManager)
         imageView.frame = CGRect(origin: .zero, size: normalImage.size)
 
 
+        XCTAssertFalse(gifManager.containsImageView(imageView))
         ///snapshot of the normal image
         assertSnapshot(matching: imageView, as: .image)
 
@@ -179,36 +175,18 @@ final class SwiftyGifTests: XCTestCase {
         assertSnapshot(matching: imageView.currentImage!, as: .image)
 
         // WHEN
-//        gifManager.deleteImageView(imageView)
-
         let data = self.data(filename: "sample.jpg")!
 
         let updateImage = UIImage(data: data)!
-        imageView.image = updateImage
+        imageView.setImage(updateImage, manager: gifManager)
         imageView.frame = CGRect(origin: .zero, size: updateImage.size)
 
         // THEN
+        XCTAssertFalse(gifManager.containsImageView(imageView))
 
         ///snapshot of the updated JPG
         assertSnapshot(matching: imageView, as: .image)
 
-//        // WHEN
-//        sut = try? UIImage(gifData: self.data(filename: "15MB_Einstein_rings_zoom.gif")!)
-//        imageView.setGifImage(sut)
-//
-//        // THEN
-//
-//        ///snapshot of the GIF
-//        assertSnapshot(matching: imageView.currentImage!, as: .image)
     }
 
-    /*
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
- */
 }

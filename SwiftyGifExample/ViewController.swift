@@ -12,8 +12,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     let gifManager = SwiftyGifManager(memoryLimit:100)
     let images = ["single_frame_Zt2012",
-        "no_property_dictionary.gif",
-        "sample.jpg",
+                  "no_property_dictionary.gif",
+                  "sample.jpg",
                   "1", "2", "3", "5", "4"
     ]
 
